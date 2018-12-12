@@ -5,3 +5,5 @@ ALTER TABLE isik
 DROP CONSTRAINT ak_isik_e_meil;
 
 CREATE UNIQUE INDEX ak_isik_e_meil ON isik (Upper(e_meil));
+
+SELECT * FROM isik AS i INNER JOIN tootaja AS t ON i.isik_id = t.isik_id WHERE amet_kood = 'juh' AND tootaja_seisundi_liik_kood = 1;
