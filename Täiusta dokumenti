@@ -1,0 +1,30 @@
+Loodud laused pange projekti dokumendis alajaotusesse "Funktsioonil
+põhinevad indeksid".
+
+ALTER TABLE isik
+DROP CONSTRAINT ak_isik_e_meil;
+
+CREATE UNIQUE INDEX ak_isik_e_meil ON isik (Upper(e_meil));
+
+Juhataja kinnituseks vajalik funktsioon 
+
+CREATE OR REPLACE FUNCTION f_on_juhataja(p_kasutajanimi
+text, p_parool text)
+RETURNS boolean AS $$
+DECLARE
+rslt boolean;
+BEGIN
+SELECT INTO rslt (parool = public.crypt(p_parool,
+parool)) FROM isik AS i INNER JOIN tootaja AS t ON i.isik_id = t.isik_id WHERE
+Upper(e_meil)=Upper(p_kasutajanimi) AND amet_kood = 'juh' AND tootaja_seisundi_liik_kood IN (2, 3);
+RETURN coalesce(rslt, FALSE);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER STABLE
+SET search_path = public, pg_temp;
+COMMENT ON FUNCTION f_on_juhataja(p_kasutajanimi text,
+p_parool text) IS 'Selle funktsiooni abil autenditakse
+juhatajat. Parameetri p_kasutajanimi oodatav väärtus on
+tõstutundetu kasutajanimi ja p_parool oodatav väärtus on
+tõstutundlik avatekstiline parool. Juhatajal on õigus
+süsteemi siseneda, vaid siis kui tema seisundiks on tööl
+või haiguslehel.';
