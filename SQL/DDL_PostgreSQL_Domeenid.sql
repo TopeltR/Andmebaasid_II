@@ -5,13 +5,15 @@ CONSTRAINT chk_reg_aeg_vahemikus CHECK (
 
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
   CONSTRAINT CHK_nimetus_pole_tyhi CHECK ((VALUE !~ '^[[:space:]]+$') AND (VALUE <> ''));
-chk_raja_seisundi_liik_nimetus_ei_koosne_tyhikutest
 
 ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
 ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_pole_tyhi;
 
 ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT chk_raja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
 ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT chk_Raja_seisundi_liik_nimetus_pole_tyhi;
+
+ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_pole_tyhi;
 
 ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT chk_raja_kategooria_tyyp_nimetus_ei_koosne_tyhikutest;
 ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT chk_raja_kategooria_tyyp_nimetus_pole_tyhi;
