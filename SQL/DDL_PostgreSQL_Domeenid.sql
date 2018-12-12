@@ -41,3 +41,5 @@ ALTER TABLE Raja_kategooria_tyyp ALTER COLUMN nimetus TYPE d_nimetus;
 ALTER TABLE Raja_kategooria ALTER COLUMN nimetus TYPE d_nimetus;
 ALTER TABLE Kliendi_seisundi_liik ALTER COLUMN nimetus TYPE d_nimetus;
 ALTER TABLE Isiku_seisundi_liik ALTER COLUMN nimetus TYPE d_nimetus;
+ALTER TABLE Isik ALTER COLUMN reg_aeg TYPE d_reg_aeg;
+ALTER TABLE Rada ALTER COLUMN reg_aeg TYPE d_reg_aeg;
