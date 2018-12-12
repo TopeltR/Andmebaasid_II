@@ -1,0 +1,7 @@
+Loodud laused pange projekti dokumendis alajaotusesse "Funktsioonil
+põhinevad indeksid".
+
+ALTER TABLE isik
+DROP CONSTRAINT ak_isik_e_meil;
+
+CREATE UNIQUE INDEX ak_isik_e_meil ON isik (Upper(e_meil));
