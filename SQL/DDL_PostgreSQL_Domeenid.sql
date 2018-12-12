@@ -1,36 +1,36 @@
 CREATE DOMAIN d_reg_aeg TIMESTAMP without time zone NOT NULL DEFAULT localtimestamp(0)
-CONSTRAINT CHK_reg_aeg_ajavahemik CHECK (
+CONSTRAINT chk_reg_aeg_vahemikus CHECK (
   VALUE BETWEEN '2010-01-01' AND '2100-12-31 23:59:59'
-)
+);
 
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
-  CONSTRAINT CHK_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$'),
-  CONSTRAINT CHK_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '')
+  CONSTRAINT CHK_nimetus_pole_tyhi CHECK ((VALUE !~ '^[[:space:]]+$') AND (VALUE <> ''));
+chk_raja_seisundi_liik_nimetus_ei_koosne_tyhikutest
+
+ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_pole_tyhi;
+
+ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT chk_raja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT chk_Raja_seisundi_liik_nimetus_pole_tyhi;
+
+ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT chk_raja_kategooria_tyyp_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT chk_raja_kategooria_tyyp_nimetus_pole_tyhi;
+
+ALTER TABLE Raja_kategooria DROP CONSTRAINT chk_raja_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Raja_kategooria DROP CONSTRAINT chk_raja_nimetus_pole_tyhi;
+
+ALTER TABLE Kliendi_seisundi_liik DROP CONSTRAINT chk_kliendi_seisundi_liik_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Kliendi_seisundi_liik DROP CONSTRAINT chk_kliendi_seisundi_liik_nimetus_pole_tyhi;
+
+ALTER TABLE Isiku_seisundi_liik DROP CONSTRAINT chk_isiku_seisundi_liik_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Isiku_seisundi_liik DROP CONSTRAINT chk_isiku_seisundi_liik_nimetus_pole_tyhi;
+
+ALTER TABLE Rada DROP CONSTRAINT chk_rada_nimetus_ei_koosne_tyhikutest;
+ALTER TABLE Rada DROP CONSTRAINT chk_rada_nimetus_ei_ole_tyhi_string;
 
 
-ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT CHK_Tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT CHK_Tootaja_seisundi_liik_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT CHK_Raja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Raja_seisundi_liik DROP CONSTRAINT CHK_Raja_seisundi_liik_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT CHK_Raja_kategooria_tyyp_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Raja_kategooria_tyyp DROP CONSTRAINT CHK_Raja_kategooria_tyyp_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Raja_kategooria DROP CONSTRAINT CHK_Raja_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Raja_kategooria DROP CONSTRAINT CHK_Raja_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Kliendi_seisundi_liik DROP CONSTRAINT CHK_Kliendi_seisundi_liik_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Kliendi_seisundi_liik DROP CONSTRAINT CHK_Kliendi_seisundi_liik_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Isiku_seisundi_liik DROP CONSTRAINT CHK_Isiku_seisundi_liik_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Isiku_seisundi_liik DROP CONSTRAINT CHK_Isiku_seisundi_liik_nimetus_ei_ole_tyhi;
-
-ALTER TABLE Rada DROP CONSTRAINT CHK_Rada_nimetus_ei_koosne_tyhikutest;
-ALTER TABLE Rada DROP CONSTRAINT CHK_Rada_nimetus_ei_ole_tyhi;
-ALTER TABLE Rada DROP CONSTRAINT CHK_Rada_reg_aeg_ajavahemik;
-
-ALTER TABLE Isik DROP CONSTRAINT CHK_Isik_reg_aeg_ajavahemik;
+ALTER TABLE Rada DROP CONSTRAINT chk_rada_reg_aeg_vahemikus;
+ALTER TABLE Isik DROP CONSTRAINT chk_isik_reg_aeg_vahemikus;
 
 
 
