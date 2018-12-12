@@ -4,8 +4,8 @@ CONSTRAINT CHK_reg_aeg_ajavahemik CHECK (
 )
 
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
-  CONSTRAINT CHK_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$'),
-  CONSTRAINT CHK_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '')
+  CONSTRAINT CHK_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$') AND 
+  CONSTRAINT CHK_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
 
 
 ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT CHK_Tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
