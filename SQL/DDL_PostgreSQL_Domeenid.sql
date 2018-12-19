@@ -6,6 +6,9 @@ CONSTRAINT chk_reg_aeg_vahemikus CHECK (
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
   CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$')
   CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
+  
+CREATE DOMAIN d_pikem_vali VARCHAR(60) NOT NULL
+  CONSTRAINT chk_vali_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
                                                                            
 ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
 ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
