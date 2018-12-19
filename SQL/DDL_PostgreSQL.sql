@@ -57,22 +57,18 @@ DROP TABLE IF EXISTS Raja_kategooria_omamine CASCADE
 CREATE TABLE Tootaja_seisundi_liik
 (
 	tootaja_seisundi_liik_kood smallint NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	CONSTRAINT PK_Tootaja_seisundi_liik PRIMARY KEY (tootaja_seisundi_liik_kood),
 	CONSTRAINT AK_Tootaja_seisundi_liik_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Tootaja_seisundi_liik_nimetus_ei_ole_tyhi CHECK ((nimetus <> ''))
 )
 ;
 
 CREATE TABLE Raja_seisundi_liik
 (
 	raja_seisundi_liik_kood smallint NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	CONSTRAINT PK_Raja_seisundi_liik PRIMARY KEY (raja_seisundi_liik_kood),
 	CONSTRAINT AK_Raja_seisundi_liik_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Raja_seisundi_liik_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Raja_seisundi_liik_nimetus_ei_ole_tyhi CHECK ((nimetus <> ''))
 )
 ;
 
@@ -90,23 +86,19 @@ CREATE TABLE Raja_raskus
 CREATE TABLE Raja_kategooria_tyyp
 (
 	raja_kategooria_tyyp_kood smallint NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	CONSTRAINT PK_Raja_kategooria_tyyp PRIMARY KEY (raja_kategooria_tyyp_kood),
 	CONSTRAINT AK_Raja_kategooria_tyyp_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Raja_kategooria_tyyp_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Raja_kategooria_tyyp_nimetus_pole_tyhi CHECK ((nimetus <> ''))
 )
 ;
 
 CREATE TABLE Raja_kategooria
 (
 	raja_kategooria_kood integer NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	raja_kategooria_tyyp_kood integer NOT NULL,
 	CONSTRAINT PK_Raja_kategooria PRIMARY KEY (raja_kategooria_kood),
 	CONSTRAINT AK_raja_kategooria_nimetus_raja_kategooria_tyyp_kood UNIQUE (nimetus,raja_kategooria_tyyp_kood),
-	CONSTRAINT CHK_Raja_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Raja_nimetus_ei_ole_tyhi CHECK (nimetus <> ''),
 	CONSTRAINT FK_Raja_kategooria_Raja_kategooria_tyyp FOREIGN KEY (raja_kategooria_tyyp_kood) REFERENCES Raja_kategooria_tyyp (raja_kategooria_tyyp_kood) ON DELETE No Action ON UPDATE No Action
 )
 ;
@@ -131,22 +123,18 @@ CREATE TABLE Riik
 CREATE TABLE Kliendi_seisundi_liik
 (
 	kliendi_seisundi_liik_kood smallint NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	CONSTRAINT PK_Kliendi_seisundi_liik PRIMARY KEY (kliendi_seisundi_liik_kood),
 	CONSTRAINT AK_Kliendi_seisundi_liik_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Kliendi_seisundi_liik_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Kliendi_seisundi_liik_nimetus_ei_ole_tyhi CHECK ((nimetus <> ''))
 )
 ;
 
 CREATE TABLE Isiku_seisundi_liik
 (
 	isiku_seisundi_liik_kood smallint NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	CONSTRAINT PK_Isiku_seisundi_liik PRIMARY KEY (isiku_seisundi_liik_kood),
 	CONSTRAINT AK_isiku_seisundi_liik_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Isiku_seisundi_liik_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Isiku_seisundi_liik_nimetus_ei_ole_tyhi CHECK ((nimetus <> ''))
 )
 ;
 
@@ -186,16 +174,28 @@ CREATE TABLE Isik
 	CONSTRAINT CHK_Isik_elukoht_ei_koosne_tyhikutest CHECK ((elukoht !~ '^[[:space:]]+$')),
 	CONSTRAINT CHK_Isik_eesnimi_ei_koosne_tyhikutest CHECK (eesnimi !~ '^[[:space:]]+$'),
 	CONSTRAINT CHK_Isik_perenimi_ei_koosne_tyhikutest CHECK ((perenimi !~ '^[[:space:]]+$')),
+	CONSTRAINT CHK_Isik_isikukood_ei_koosne_tyhikutest CHECK ((isikukood ~! '^[[:space:]]+$')),
 	CONSTRAINT CHK_Isik_eesnimi_ei_ole_tyhi_string CHECK (eesnimi <> ''),
 	CONSTRAINT CHK_Isik_perenimi_ei_ole_tyhi_string CHECK (perenimi <> ''),
 	CONSTRAINT CHK_Isik_isikukood_ei_ole_tyhi CHECK ((isikukood <> '')),
-	CONSTRAINT CHK_Isik_isikukood_ei_koosne_tyhikutest CHECK ((isikukood ~! '^[[:space:]]+$')),
 	CONSTRAINT CHK_Isik_elukoht_ei_ole_tyhi CHECK ((elukoht <> '')),
 	CONSTRAINT CHK_Isik_elukoht_ei_koosne_numritest CHECK ((elukoht !~ '^[[:digit:]]+$')),
 	CONSTRAINT FK_Isik_Isiku_seisundi_liik FOREIGN KEY (isiku_seisundi_liik_kood) REFERENCES Isiku_seisundi_liik (isiku_seisundi_liik_kood) ON DELETE No Action ON UPDATE Cascade,
 	CONSTRAINT FK_Isik_Riik FOREIGN KEY (isikukoodi_riik) REFERENCES Riik (riik_kood) ON DELETE No Action ON UPDATE Cascade
 )
 ;
+
+CREATE DOMAIN d_reg_aeg TIMESTAMP without time zone NOT NULL DEFAULT localtimestamp(0)
+CONSTRAINT CHK_reg_aeg_ajavahemik CHECK (
+  VALUE BETWEEN '2010-01-01' AND '2100-12-31 23:59:59'
+)
+
+CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
+  CONSTRAINT CHK_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$'),
+  CONSTRAINT CHK_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '')
+
+
+
 CREATE INDEX IXFK_Isik_Isiku_seisundi_liik ON Isik (isiku_seisundi_liik_kood ASC)
 ;
 CREATE INDEX IXFK_Isik_Riik ON Isik (isikukoodi_riik ASC)
@@ -246,20 +246,16 @@ CREATE INDEX IXFK_Klient_Kliendi_seisundi_liik_03 ON Klient (kliendi_seisundi_li
 CREATE TABLE Rada
 (
 	Raja_kood integer NOT NULL,
-	nimetus varchar(20) NOT NULL,
+	nimetus d_nimetus,
 	pikkus smallint NOT NULL,
-	reg_aeg timestamp without time zone NOT NULL   DEFAULT localtimestamp(0),
+	reg_aeg d_reg_aeg,
 	registreerija_id smallint NOT NULL,
-	raja_seisundi_liik_kood smallint NOT NULL   DEFAULT 1,
+	raja_seisundi_liik_kood smallint NOT NULL DEFAULT 1,
 	raja_raskus_kood smallint NOT NULL,
 	isik_id integer NULL,
 	CONSTRAINT PK_Rada PRIMARY KEY (Raja_kood),
 	CONSTRAINT AK_Rada_nimetus UNIQUE (nimetus),
-	CONSTRAINT CHK_Rada_pikkus_nulli_suurem CHECK (pikkus > 0
-	),
-	CONSTRAINT CHK_Rada_reg_aeg_ajavahemik CHECK (reg_aeg BETWEEN '2010-01-01' AND '2100-12-31 23:59:59'),
-	CONSTRAINT CHK_Rada_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Rada_nimetus_ei_ole_tyhi CHECK ((nimetus <> '')),
+	CONSTRAINT CHK_Rada_pikkus_nulli_suurem CHECK (pikkus > 0),
 	CONSTRAINT FK_Rada_Raja_raskus FOREIGN KEY (raja_raskus_kood) REFERENCES Raja_raskus (raja_raskus_kood) ON DELETE No Action ON UPDATE No Action,
 	CONSTRAINT FK_Rada_Raja_seisundi_liik FOREIGN KEY (raja_seisundi_liik_kood) REFERENCES Raja_seisundi_liik (raja_seisundi_liik_kood) ON DELETE No Action ON UPDATE No Action,
 	CONSTRAINT FK_Rada_Tootaja FOREIGN KEY (isik_id) REFERENCES Tootaja (isik_id) ON DELETE No Action ON UPDATE No Action
@@ -294,6 +290,6 @@ CREATE INDEX IXFK_Raja_kategooria_omamine_Raja_kategooria ON Raja_kategooria_oma
 ;
 
 
-/* Create Table Comments, Sequences for Autonumber Columns */
+
 
  
