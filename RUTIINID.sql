@@ -21,7 +21,7 @@ DELETE FROM Rada WHERE raja_kood = p_rada_kood;
 $$ LANGUAGE sql SECURITY DEFINER
 SET search_path = public, pg_temp;
 
-COMMENT ON FUNCTION f_unusta_rada(p_rada_kood Rada.raja_kood%TYPE)
+COMMENT ON FUNCTION f_aktiveeri_rada(p_rada_kood Rada.raja_kood%TYPE)
 IS 'Selle funktsiooni abil unustatake (kustutakse) rada. See funktsioon realiseerib andmebaasioperatsiooni OP2. Parameetri p_rada_kood oodatav väärtus on raja identifikaator.';
 
 CREATE OR REPLACE FUNCTION f_unusta_rada_viga() RETURNS trigger AS $$
