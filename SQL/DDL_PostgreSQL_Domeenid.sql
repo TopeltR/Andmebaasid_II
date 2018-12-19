@@ -4,7 +4,11 @@ CONSTRAINT chk_reg_aeg_vahemikus CHECK (
 );
 
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
-  CONSTRAINT CHK_nimetus_pole_tyhi CHECK ((VALUE !~ '^[[:space:]]+$') AND (VALUE <> ''));
+  CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$')
+  CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
+                                                                           
+ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
+ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
 
 ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_ei_koosne_tyhikutest;
 ALTER TABLE Tootaja_seisundi_liik DROP CONSTRAINT chk_tootaja_seisundi_liik_nimetus_pole_tyhi;
