@@ -1,5 +1,5 @@
-CREATE VIEW aktiivsed_mitteaktiivsed_rajad 
-AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund WITH (security_barrier)
+CREATE VIEW aktiivsed_mitteaktiivsed_rajad  WITH (security_barrier)
+AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
 FROM Raja_seisundi_liik
 INNER JOIN Rada ON Raja_seisundi_liik.raja_seisundi_liik_kood = Rada.raja_seisundi_liik_kood
 WHERE Rada.raja_seisundi_liik_kood In (2,3);
@@ -15,12 +15,12 @@ INNER JOIN (Raja_kategooria INNER JOIN Raja_kategooria_omamine ON Raja_kategoori
 COMMENT ON VIEW rada_kategooria_omamine IS 'Näitab rajade kategooriad (kood ja rada kategooria)';
 
 
-CREATE OR REPLACE VIEW koik_radad WITH (security_barrier)
+CREATE OR REPLACE VIEW koik_rajad WITH (security_barrier)
 AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
 FROM Raja_seisundi_liik
 INNER JOIN Rada ON Raja_seisundi_liik.raja_seisundi_liik_kood = Rada.raja_seisundi_liik_kood;
 
-COMMENT ON VIEW koik_radad IS 'Näitab kõike radasi (kood, nimetus, pikkus ja raja hetke seisundi';
+COMMENT ON VIEW koik_rajad IS 'Näitab kõike radasi (kood, nimetus, pikkus ja raja hetke seisundi';
 
 
 CREATE OR REPLACE VIEW radade_koondaruanne WITH (security_barrier)
