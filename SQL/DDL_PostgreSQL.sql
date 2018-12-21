@@ -79,7 +79,7 @@ CREATE TABLE Raja_raskus
 	CONSTRAINT PK_Raja_raskus PRIMARY KEY (raja_raskus_kood),
 	CONSTRAINT AK_Raja_raskus_nimetus UNIQUE (nimetus),
 	CONSTRAINT CHK_Raja_raskus_nimetus_ei_koose_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Raja_raskus_nimetus_ei_ole_tyhi CHECK ((nimetus <> ''))
+	CONSTRAINT CHK_Raja_raskus_nimetus_ei_ole_tyhi_string CHECK ((nimetus <> ''))
 )
 ;
 
@@ -115,7 +115,7 @@ CREATE TABLE Riik
 	CONSTRAINT PK_Riik PRIMARY KEY (riik_kood),
 	CONSTRAINT AK_Riik_nimetus UNIQUE (nimetus),
 	CONSTRAINT CHK_Riik_nimetus_ei_koosne_tyhikutest CHECK ((nimetus !~ '^[[:space:]]+$')),
-	CONSTRAINT CHK_Riik_nimetus_ei_ole_tyhi CHECK ((nimetus <> '')),
+	CONSTRAINT CHK_Riik_nimetus_ei_ole_tyhi_string CHECK ((nimetus <> '')),
 	CONSTRAINT CHK_Riik_kood_koosneb_kolmest_suurest_tahest CHECK ((riik_kood ~ '[A-Z]{3}'))
 )
 ;
@@ -146,7 +146,7 @@ CREATE TABLE Amet
 	CONSTRAINT PK_Amet PRIMARY KEY (amet_kood),
 	CONSTRAINT AK_Amet_nimetus UNIQUE (nimetus),
 	CONSTRAINT CHK_Amet_kirjeldus_ei_koosne_tyhikutest CHECK ((kirjeldus !~ '^[[:space:]]*$')),
-	CONSTRAINT CHK_Amet_kirjeldus_ei_ole_tyhi CHECK ((kirjeldus <> ''))
+	CONSTRAINT CHK_Amet_kirjeldus_ei_ole_tyhi_string CHECK ((kirjeldus <> ''))
 )
 ;
 
