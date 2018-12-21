@@ -1,5 +1,5 @@
 CREATE VIEW aktiivsed_mitteaktiivsed_rajad  WITH (security_barrier)
-AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
+AS SELECT Rada.raja_kood, Rada.nimetus AS raja_nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
 FROM Raja_seisundi_liik
 INNER JOIN Rada ON Raja_seisundi_liik.raja_seisundi_liik_kood = Rada.raja_seisundi_liik_kood
 WHERE Rada.raja_seisundi_liik_kood In (2,3);
@@ -16,7 +16,7 @@ COMMENT ON VIEW rada_kategooria_omamine IS 'Näitab rajade kategooriad (kood ja 
 
 
 CREATE OR REPLACE VIEW koik_rajad WITH (security_barrier)
-AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
+AS SELECT Rada.raja_kood, Rada.nimetus AS koik_rajad_nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund
 FROM Raja_seisundi_liik
 INNER JOIN Rada ON Raja_seisundi_liik.raja_seisundi_liik_kood = Rada.raja_seisundi_liik_kood;
 
@@ -34,7 +34,7 @@ COMMENT ON VIEW radade_koondaruanne IS 'Näitab radade koondaruanne nende seisun
 
 
 CREATE OR REPLACE VIEW radade_detailid WITH (security_barrier)
-AS SELECT Rada.raja_kood, Rada.nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund, Isik.e_meil AS registreerija_email, (Trim(Isik.eesnimi || ' ' || Isik.perenimi)) AS registreerija_nimi, Rada.reg_aeg
+AS SELECT Rada.raja_kood, Rada.nimetus AS radade_detailide_nimetus, Rada.pikkus, Raja_seisundi_liik.nimetus AS hetke_seisund, Isik.e_meil AS registreerija_email, (Trim(Isik.eesnimi || ' ' || Isik.perenimi)) AS registreerija_nimi, Rada.reg_aeg
 FROM Raja_seisundi_liik
 INNER JOIN (Isik INNER JOIN Rada ON Isik.isik_id=Rada.registreerija_id) ON Raja_seisundi_liik.raja_seisundi_liik_kood = Rada.raja_seisundi_liik_kood;
 
