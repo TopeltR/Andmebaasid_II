@@ -165,7 +165,7 @@ CREATE TABLE Isik
 	elukoht varchar(1000) NULL,
 	CONSTRAINT PK_Isik PRIMARY KEY (isik_id),
 	CONSTRAINT AK_Isik_e_meil UNIQUE (e_meil),
-	CONSTRAINT AK_Isik_Isikukood_riik_kood UNIQUE (isikukoodi_riik,isikukood),
+	CONSTRAINT AK_Isik_Isikukood_riik_kood UNIQUE (isikukood,isikukoodi_riik),
 	CONSTRAINT CHK_Isik_isikukood_oige_struktuur CHECK ((isikukood ~ '([a-z])|([A-Z])|([0-9])|(/)|(-)|(\s)')),
 	CONSTRAINT CHK_Isik_email_oige_struktuur CHECK ((e_meil ~ '^[a-z0-9._%-]+@[a-z0-9.-]+[.][a-z]+$')),
 	CONSTRAINT CHK_Isik_eesnimi_perenimi_on_olemas CHECK ((eesnimi IS NOT NULL) OR (perenimi IS NOT NULL)),
