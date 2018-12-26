@@ -1,14 +1,9 @@
 CREATE DOMAIN d_reg_aeg TIMESTAMP without time zone NOT NULL DEFAULT localtimestamp(0)
-CONSTRAINT chk_reg_aeg_vahemikus CHECK (
-  VALUE BETWEEN '2010-01-01' AND '2100-12-31 23:59:59'
-);
+CONSTRAINT chk_reg_aeg_vahemikus CHECK (VALUE BETWEEN '2010-01-01' AND '2100-12-31 23:59:59');
 
 CREATE DOMAIN d_nimetus VARCHAR(20) NOT NULL
   CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$')
   CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
-  
-CREATE DOMAIN d_pikem_vali VARCHAR(60) NOT NULL
-  CONSTRAINT chk_vali_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
                                                                            
 ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
 ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_ole_tyhi_string CHECK (VALUE <> '');
