@@ -99,8 +99,6 @@ CREATE TABLE Raja_kategooria
 );
 CREATE INDEX IXFK_Raja_kategooria_Raja_kategooria_tyyp ON Raja_kategooria (raja_kategooria_tyyp_kood ASC)
 ;
-CREATE INDEX IXFK_Raja_kategooria_Raja_kategooria_tyyp_02 ON Raja_kategooria (raja_kategooria_tyyp_kood ASC)
-;
 
 
 CREATE TABLE Riik
@@ -253,8 +251,6 @@ CREATE INDEX IXFK_Rada_Raja_raskus ON Rada (raja_raskus_kood ASC)
 CREATE INDEX IXFK_Rada_Raja_raskus_02 ON Rada (raja_raskus_kood ASC)
 ;
 CREATE INDEX IXFK_Rada_Raja_seisundi_liik ON Rada (raja_seisundi_liik_kood ASC)
-;
-CREATE INDEX IXFK_Rada_Raja_seisundi_liik_02 ON Rada (raja_seisundi_liik_kood ASC)
 ;
 CREATE INDEX IXFK_Rada_Tootaja ON Rada (registreerija_id ASC)
 ;

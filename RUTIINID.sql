@@ -15,19 +15,19 @@ SET search_path = public, pg_temp;
 COMMENT ON FUNCTION f_lisa_rada(p_rada_kood Rada.raja_kood%TYPE, p_nimetus Rada.nimetus%TYPE, p_pikkus Rada.pikkus%TYPE, p_registreerija_email Isik.e_meil%TYPE, p_raskuse_nimetus Raja_raskus.nimetus%TYPE)
 IS 'Selle funktsiooni abil registreeritaksa uus rada. See funktsioon realiseerib andmebaasioperatsiooni OP1. Parameetri p_rada_kood oodatav väärtus on raja identifikaator, p_nimetus oodatav väärtus on raja nimetus, p_pikkus oodatav väärtus on raja pikkus meetrides, p_registreerija_email oodatav väärtus on isiku e-mail, p_raskuse_nimetus oodatav väärtus on raja raskuse nimetus.';
 
-CREATE OR REPLACE FUNCTION f_lisa_rada_vida() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION f_lisa_rada_viga() RETURNS trigger AS $$
 BEGIN
 	RAISE EXCEPTION 'Ei saa lisada rada, mille seisundi liik ei ole ootel.';
 	RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 
-COMMENT ON FUNCTION f_lisa_rada_vida() IS 'See trigeri funktsioon aitab jõustada ärireegli: Ei
+COMMENT ON FUNCTION f_lisa_rada_viga() IS 'See trigeri funktsioon aitab jõustada ärireegli: Ei
 saa lisada rada, mille seisundi liik ei ole ootel';
 
-CREATE TRIGGER trig_lisa_rada_vida BEFORE INSERT
+CREATE TRIGGER trig_lisa_rada_viga BEFORE INSERT
 ON Rada FOR EACH ROW WHEN (NEW.raja_seisundi_liik_kood <> 1) EXECUTE
-FUNCTION f_lisa_rada_vida();
+FUNCTION f_lisa_rada_viga();
 
 
 /* OP 2 [ainult kui ootel]*/
