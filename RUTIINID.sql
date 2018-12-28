@@ -1,10 +1,10 @@
 
 /* OP 1 */
-CREATE OR REPLACE FUNCTION f_lisa_rada(p_rada_kood Rada.raja_kood%TYPE, p_nimetus Rada.nimetus%TYPE, p_pikkus Rada.pikkus%TYPE, p_registreerija_email Isik.e_meil%TYPE, p_raskuse_nimetus Raja_raskus.nimetus%TYPE)
+CREATE OR REPLACE FUNCTION f_lisa_rada(p_rada_kood Rada.raja_kood%TYPE, p_nimetus Rada.nimetus%TYPE, p_pikkus Rada.pikkus%TYPE, p_registreerija_email Isik.e_meil%TYPE, p_raskuse_kood Raja_raskus.raja_raskus_kood%TYPE)
 RETURNS Rada.raja_kood%TYPE AS $$
 INSERT INTO rada(raja_kood, nimetus, pikkus, registreerija_id, raja_raskus_kood)
-SELECT p_rada_kood, p_nimetus, p_pikkus, isik.isik_id, raja_raskus.raja_raskus_kood
-FROM isik, raja_raskus WHERE LOWER(e_meil) = LOWER(p_registreerija_email) AND LOWER(nimetus) = LOWER(p_raskuse_nimetus)
+SELECT p_rada_kood, p_nimetus, p_pikkus, isik.isik_id, p_raskuse_kood
+FROM isik WHERE UPPER(e_meil) = UPPER(p_registreerija_email)
 ON CONFLICT DO NOTHING
 RETURNING raja_kood;
 $$ LANGUAGE sql SECURITY DEFINER
@@ -12,7 +12,7 @@ SET search_path = public, pg_temp;
 
 /* usage:   select f_lisa_rada(p_rada_kood := 4, p_nimetus := 'Lisa rada', p_pikkus := smallint '3333', p_registreerija_email := 'rasmus@live.ee', p_raskuse_nimetus := 'Raske'); */
 
-COMMENT ON FUNCTION f_lisa_rada(p_rada_kood Rada.raja_kood%TYPE, p_nimetus Rada.nimetus%TYPE, p_pikkus Rada.pikkus%TYPE, p_registreerija_email Isik.e_meil%TYPE, p_raskuse_nimetus Raja_raskus.nimetus%TYPE)
+COMMENT ON FUNCTION f_lisa_rada(p_rada_kood Rada.raja_kood%TYPE, p_nimetus Rada.nimetus%TYPE, p_pikkus Rada.pikkus%TYPE, p_registreerija_email Isik.e_meil%TYPE, p_raskuse_kood Raja_raskus.raja_raskus_kood%TYPE)
 IS 'Selle funktsiooni abil registreeritaksa uus rada. See funktsioon realiseerib andmebaasioperatsiooni OP1. Parameetri p_rada_kood oodatav väärtus on raja identifikaator, p_nimetus oodatav väärtus on raja nimetus, p_pikkus oodatav väärtus on raja pikkus meetrides, p_registreerija_email oodatav väärtus on isiku e-mail, p_raskuse_nimetus oodatav väärtus on raja raskuse nimetus.';
 
 CREATE OR REPLACE FUNCTION f_lisa_rada_viga() RETURNS trigger AS $$
