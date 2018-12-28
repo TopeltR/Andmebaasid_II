@@ -67,11 +67,6 @@ CREATE USER MAPPING FOR t164640 SERVER
 minu_testandmete_server_apex OPTIONS (user 't164640', password
 'ro6raloko');
 
-
-
-
-
-
 INSERT INTO Isik(riik_kood, isikukood, eesnimi, perenimi,
 e_mail, synni_kp, isiku_seisundi_liik_kood, parool, elukoht)
 SELECT riik_kood, isikukood, eesnimi, perenimi, e_mail,
@@ -91,8 +86,8 @@ jsonb_array_elements(isik->'isikud')->>'aadress' AS elukoht
 FROM isik_jsonb) AS lahteandmed
 WHERE isiku_seisundi_liik_kood::smallint=1;
 
-                                                                                                                                                
-                                                                                                                                                ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
+
+ALTER DOMAIN d_nimetus ADD CONSTRAINT chk_nimetus_ei_koosne_tyhikutest CHECK (VALUE !~ '^[[:space:]]+$');
 ALTER DOMAIN d_pikem_vali ADD CONSTRAINT chk_vali_ei_ole_tyhi_string CHECK (VALUE <> '');
 
 ALTER TABLE amet ADD CONSTRAINT chk_amet_amet_kood_ei_koosne_tyhikutest CHECK (amet_kood !~ '^[[:space:]]+$');
